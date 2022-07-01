@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth import models as mod
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Test(models.Model):
@@ -25,7 +27,7 @@ class Answer(models.Model):
 
 
 class TestResult(models.Model):
-    user_id = models.ForeignKey("User", on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     test_id = models.ForeignKey("Test", on_delete=models.CASCADE)
     result = models.PositiveSmallIntegerField()
     attempt_time = models.DateTimeField(auto_now_add=True)
@@ -34,7 +36,3 @@ class TestResult(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=50)
     parent = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
-
-
-class User(models.Model):
-    pass
