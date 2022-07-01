@@ -1,5 +1,15 @@
 from django.db import models
-from django.contrib.auth import models as mod
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=50)
+    parent = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Test(models.Model):
@@ -9,7 +19,10 @@ class Test(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     attempts = models.PositiveIntegerField()
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
-    time_border = models.TimeField()
+    time_border = models.DurationField()
+
+    def __str__(self):
+        return self.title
 
 
 class Question(models.Model):
@@ -17,24 +30,24 @@ class Question(models.Model):
     question_text = models.TextField()
     question_type = models.SmallIntegerField()
 
+    def __str__(self):
+        return self.question_text
+
 
 class Answer(models.Model):
     question_id = models.ForeignKey("Question", on_delete=models.CASCADE)
     answer_text = models.TextField()
     is_correct = models.BooleanField()
 
+    def __str__(self):
+        return self.answer_text
+
 
 class TestResult(models.Model):
-    user_id = models.ForeignKey("User", on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     test_id = models.ForeignKey("Test", on_delete=models.CASCADE)
     result = models.PositiveSmallIntegerField()
     attempt_time = models.DateTimeField(auto_now_add=True)
 
-
-class Category(models.Model):
-    title = models.CharField(max_length=50)
-    parent = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
-
-
-class User(models.Model):
-    pass
+    def __str__(self):
+        return f"{self.result}, {self.attempt_time}"
