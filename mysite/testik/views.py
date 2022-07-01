@@ -3,6 +3,10 @@ from django.http import HttpResponse
 
 
 def main_page(request):
+    return HttpResponse('Добро пожаловать на главную страницу')
+
+
+def tests_page(request):
     return HttpResponse('Тут все тесты')
 
 
