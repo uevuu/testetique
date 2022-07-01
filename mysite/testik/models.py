@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import models as mod
 
 
 class Test(models.Model):
@@ -32,4 +33,8 @@ class TestResult(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=50)
-    parent = models.ForeignKey("Category", on_delete=models.SET_NULL)
+    parent = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
+
+
+class User(models.Model):
+    pass
