@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Test
 
 
 def main_page(request):
@@ -7,7 +8,9 @@ def main_page(request):
 
 
 def tests_page(request):
-    return HttpResponse('Тут все тесты')
+    all_tests = Test.objects.all()
+    return render(request, 'testik/tests_page.html', {'all_tests': all_tests, 'title': 'наши тесты'})
+    # return HttpResponse('Тут все тесты')
 
 
 def description_test(request):

@@ -17,7 +17,7 @@ class Test(models.Model):
     description = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    attempts = models.PositiveIntegerField()
+    attempts = models.PositiveIntegerField(default=0)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     time_border = models.DurationField()
 
