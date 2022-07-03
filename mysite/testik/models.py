@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -11,6 +12,9 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={"category_id": self.pk})
+
 
 class Test(models.Model):
     title = models.CharField(max_length=150)
@@ -20,6 +24,9 @@ class Test(models.Model):
     attempts = models.PositiveIntegerField(default=0)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     time_border = models.DurationField()
+
+    def get_test_url(self):
+        return reverse('test', kwargs={"test_id": self.pk})
 
     def __str__(self):
         return self.title

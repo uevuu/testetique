@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Test, Category
+from .models import Test, Category, Question
 
 
 def main_page(request):
@@ -9,10 +9,8 @@ def main_page(request):
 
 def tests_page(request):
     all_tests = Test.objects.all()
-    categories = Category.objects.all()
     context = {
         'all_tests': all_tests,
-        'categories': categories,
         'title': 'Наши тесты'
     }
     return render(request, template_name='testik/tests_page.html', context=context)
@@ -20,18 +18,22 @@ def tests_page(request):
 
 def get_category(request, category_id):
     all_tests = Test.objects.filter(category_id=category_id)
-    categories = Category.objects.all()
     curr_category = Category.objects.get(pk=category_id)
     context = {
         'all_tests': all_tests,
-        'categories': categories,
         'category': curr_category
     }
     return render(request, template_name='testik/category.html', context=context)
 
 
-def description_test(request):
-    return HttpResponse('Это описание к тесту')
+def description_test(request, test_id):
+    curr_test = Test.objects.get(pk=test_id)
+    questions = Question.objects.filter(test_id=test_id)
+    context = {
+        'test': curr_test,
+        'questions': questions
+    }
+    return render(request, template_name='testik/test.html', context=context)
 
 
 def passing_test(request):
