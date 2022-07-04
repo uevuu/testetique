@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{% block title %}Testetique{% endblock %}</title>
+</head>
+body {
+padding-top 65px;
+}
+<body>
+<header>
+    {% include 'inc/_nav.html'%}
+</header>
+<main>
+    <div class="row">
+        <div class="col-md-3">
+            {% block sidebar %}SIDEBAR{% endblock %}
+        </div>
+        <div class="col-md-6">
+            {% block content %}CONTENT{% endblock %}
+        </div>
+    </div>
+</main>
+</body>
+</html>

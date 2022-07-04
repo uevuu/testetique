@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}{{test}}{% endblock %}
+<main>
+    {% block content %}
+    {% for question in questions %}
+    <div class="card text-bg-secondary mb-3" style="max-width: 70rem;">
+        <div class="card-header">{{question.question_text}}</div>
+        <div class="card-body">
+            <h5 class="card-title">{{question.question_text}}</h5>
+            <p class="card-text">{{question.question_text}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
+</main>

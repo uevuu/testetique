@@ -1,0 +1,15 @@
+{% for item in all_tests %}
+<div class="card text-bg-secondary mb-3" style="max-width: 70rem;">
+    <style>
+        a {
+        text-decoration: none;
+        color: inherit;
+        }
+    </style>
+    <div class="card-header"><a href="{{item.category.get_absolute_url}}">{{item.category}}</a></div>
+    <div class="card-body">
+        <h5 class="card-title"><a href="{{item.get_test_url}}">{{item.title}}</a></h5>
+        <p class="card-text">{{item.description}}</p>
+    </div>
+</div>
+{% endfor %}
