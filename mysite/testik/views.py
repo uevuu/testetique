@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Test
+from .models import TestResult
 
 
 def main_page(request):
@@ -8,9 +8,7 @@ def main_page(request):
 
 
 def tests_page(request):
-    all_tests = Test.objects.all()
-    return render(request, 'testik/tests_page.html', {'all_tests': all_tests, 'title': 'наши тесты'})
-    # return HttpResponse('Тут все тесты')
+    return HttpResponse('Тут все тесты')
 
 
 def description_test(request):
@@ -26,4 +24,6 @@ def result(request):
 
 
 def history(request):
-    return HttpResponse('История прохождения тестов')
+    results = TestResult.objects.filter(user_id=request.user.id)
+    context = {"title": "История пройденных тестов", "results": results}
+    return render(request, "testik/history.html", context)
