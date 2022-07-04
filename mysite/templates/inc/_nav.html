@@ -1,3 +1,9 @@
+<style>
+    form {
+        width: 700px;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'main' %}">Testetique</a>
@@ -15,8 +21,9 @@
                 </li>
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Введите категорию" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Тык</button>
+                <input class="form-control me-2" type="search" maxlength="150"
+                       placeholder="Введите название теста, например, Как хорошо ты знаешь игры?" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">🔍</button>
             </form>
         </div>
     </div>
