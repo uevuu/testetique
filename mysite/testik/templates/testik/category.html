@@ -4,7 +4,11 @@
 
 <main>
     {% block accordion %}
-    {% include 'inc/_accordion.html' %}
+    {% load testik_tags %}
+    <div align="center">
+        <p class="fw-semibold">Категрия: {{category}}</p>
+        <button class="btn btn-primary" onclick="history.back()">Вернуться ко всем тестам</button>
+    </div>
     {% endblock %}
 
     {% block content %}
