@@ -19,7 +19,6 @@ def tests_page(request):
 
 def get_category(request, category_id):
     child_category = Category.objects.filter(parent_id=category_id)
-    print(child_category)
     all_tests = Test.objects.filter(Q(category_id__in=child_category) | Q(category_id=category_id))
     curr_category = Category.objects.get(pk=category_id)
     context = {
@@ -31,7 +30,6 @@ def get_category(request, category_id):
 
 def description_test(request, test_id):
     curr_test = get_object_or_404(Test, pk=test_id)
-    # curr_test = Test.objects.get(pk=test_id)
     questions = Question.objects.filter(test_id=test_id)
     context = {
         'test': curr_test,
