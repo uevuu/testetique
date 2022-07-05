@@ -11,20 +11,22 @@
 <style>
     header{
     margin-bottom: 70px;
+
 </style>
 <header>
     {% include 'inc/_nav.html'%}
 </header>
 <main>
+    <br>
     <div class="row">
         <div class="col-md-3">
             {% block accordion %}ACCORDION{% endblock %}
         </div>
-<!--        <div class="col-md-3">-->
-        <!--            {% block sidebar %}SIDEBAR{% endblock %}-->
-        <!--        </div>-->
         <div class="col-md-6">
             {% block content %}CONTENT{% endblock %}
+        </div>
+        <div class="col-md-3">
+            {% block sidebar %}SIDEBAR{% endblock %}
         </div>
     </div>
 </main>

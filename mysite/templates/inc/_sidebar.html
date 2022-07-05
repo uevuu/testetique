@@ -1,13 +1,14 @@
-{% load testik_tags %}
-<div class="list-group">
-    {% get_categories as categories %}
-    {% for category in categories %}
-    {% if category.parent == None %}
-    <label class="list-group-item">
-        <input class="form-check-input me-1" type="checkbox" value="">
-        <a href="{{category.get_absolute_url}}" >{{category.title}}({{category.parent}})</a>
-    </label>
-    <!--    <a href="{{category.get_absolute_url}}" class="list-group-item list-group-item-action">{{category.title}}({{category.parent}})</a>-->
-    {% endif %}
-    {% endfor %}
+<div class="list-group" id="list-tab" role="tablist">
+    <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home"
+       role="tab" aria-controls="list-home">Сортироваь по дате добавлпения(&uArr;)</a>
+    <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile"
+       role="tab" aria-controls="list-profile">Сортироваь по дате добавлпения(&dArr;)</a>
+    <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list"
+       href="#list-messages" role="tab" aria-controls="list-messages">Сортировать по названию(&uArr;)</a>
+    <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list"
+       href="#list-settings" role="tab" aria-controls="list-settings">Сортировать по названию(&dArr;)</a>
+    <a class="list-group-item list-group-item-action" id="list-messages-1" data-bs-toggle="list"
+       href="#list-messages" role="tab" aria-controls="list-messages">Сортировать по длительность(&uArr;)</a>
+    <a class="list-group-item list-group-item-action" id="list-settings-1" data-bs-toggle="list"
+       href="#list-settings" role="tab" aria-controls="list-settings">Сортировать по длительность(&dArr;)</a>
 </div>

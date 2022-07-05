@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.db.models import Q
 from .models import Test, Category, Question
@@ -36,6 +36,18 @@ def description_test(request, test_id):
         'questions': questions
     }
     return render(request, template_name='testik/test.html', context=context)
+
+
+def filter_tests(request):
+    if request.GET:
+        child_category = Category.objects.filter(parent_id__in=request.GET.getlist("category"))
+        tests = Test.objects.filter(
+            Q(category_id__in=request.GET.getlist("category")) | Q(category_id__in=child_category))
+        context = {
+            'all_tests': tests
+        }
+        return render(request, template_name='testik/tests_page.html', context=context)
+    return tests_page(request)
 
 
 def passing_test(request):
