@@ -19,6 +19,7 @@ class Category(models.Model):
         ordering = ["title"]
 
     def get_absolute_url(self):
+        # url in template tags
         return reverse('category', kwargs={"category_id": self.pk})
 
 

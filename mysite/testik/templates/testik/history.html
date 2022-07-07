@@ -3,6 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 <main>
+    {% block sidebar %}{% endblock %}
     {% block content %}
     {% include 'inc/_history.html' %}
     {% endblock %}

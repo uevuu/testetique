@@ -1,6 +1,7 @@
 <style>
-    form {
-        width: 700px;
+    .d-flex {
+        width: 650px;
+        margin: 0 auto;
     }
 </style>
 
@@ -22,9 +23,19 @@
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" maxlength="150"
-                       placeholder="Введите название теста, например, Как хорошо ты знаешь игры?" aria-label="Search">
+                       placeholder="Введите название теста, например, Как хорошо ты знаешь игры?"
+                       aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">🔍</button>
             </form>
+            {% if request.user.is_authenticated %}
+            <span class="navbar-text">
+                Добро пожаловать, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a>
+            </span>
+            {% else %}
+            <span class="navbar-text">
+                <a href="{% url 'main' %}">Register</a> | <a href="{% url 'login' %}">Login</a>
+            </span>
+            {% endif %}
         </div>
     </div>
 </nav>

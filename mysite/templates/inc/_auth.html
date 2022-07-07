@@ -1,0 +1,29 @@
+<style>
+    table {
+        background: #e0e0e0;
+        width: 663px;
+        /*так и не понял, как без указания сделать размер такой же, как и у message*/
+        border-radius: 10px;
+    }
+
+    TD, TH {
+        padding: 20px;
+    }
+
+    .errorlist {
+        color: red;
+        display: inline-block;
+    }
+
+</style>
+
+<form method="POST">
+    <br>
+    <h3>{{ form_title }}</h3>
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button style="width: 663px" type="submit" class="btn btn-primary col-lg-6">{{ button_title }}</button>
+<!--    так и не понял, как без указания сделать размер такой же, как и у message-->
+</form>

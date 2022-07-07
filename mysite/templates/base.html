@@ -4,14 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>{% block title %}Testetique{% endblock %}</title>
+    <title>{% block title %}TITLE{% endblock %}</title>
 </head>
 
 <body>
 <style>
-    header{
-    margin-bottom: 70px;
+    header {
+        margin-bottom: 70px;
+    }
 
+    body {
+        overflow-x: hidden;
+    }
 </style>
 <header>
     {% include 'inc/_nav.html'%}
@@ -22,6 +26,7 @@
             {% block sidebar %}SIDEBAR{% endblock %}
         </div>
         <div class="col-md-6">
+            {% include 'inc/_messages.html' %}
             {% block content %}CONTENT{% endblock %}
         </div>
     </div>
