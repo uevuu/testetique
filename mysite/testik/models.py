@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from .validators import question_type_validator
 
 User = get_user_model()
 
@@ -48,7 +49,8 @@ class Test(models.Model):
 class Question(models.Model):
     test_id = models.ForeignKey("Test", on_delete=models.CASCADE, verbose_name="Тест")
     question_text = models.TextField(verbose_name="Вопрос")
-    question_type = models.SmallIntegerField(default=0, verbose_name="Тип вопроса")
+    question_type = models.SmallIntegerField(validators=[question_type_validator],
+                                             default=0, verbose_name="Тип вопроса")
 
     def __str__(self):
         return self.question_text

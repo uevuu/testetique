@@ -8,18 +8,38 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ("parent",)
 
 
+class QuestionInline(admin.TabularInline):
+    model = Question
+
+
 class TestAdmin(admin.ModelAdmin):
     list_display = ("title", "description", "created_date", "update_date",
                     "attempts", "category", "time_border", "shuffle")
     search_fields = ("title", "description")
     list_editable = ("shuffle",)
     list_filter = ("created_date", "update_date", "category", "time_border", "shuffle")
+    inlines = [
+        QuestionInline,
+    ]
+
+
+class AnswerInline(admin.TabularInline):
+    model = Answer
 
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ("test_id", "question_text", "question_type")
     search_fields = ("question_text",)
     list_filter = ("question_type",)
+    fieldsets = (
+        (None, {'fields': ("test_id", "question_text",)}),
+        ("-1 = открытое поле, 0 = вопрос с одним ответом, 1 = вопрос с несколькими ответами", {
+            'fields': ('question_type',),
+        })
+    )
+    inlines = [
+        AnswerInline,
+    ]
 
 
 class AnswerAdmin(admin.ModelAdmin):
