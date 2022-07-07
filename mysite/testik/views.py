@@ -58,7 +58,6 @@ def tests_page(request):
 @login_required
 def get_category(request, category_id):
     child_category = Category.objects.filter(parent_id=category_id)
-    print(child_category)
     all_tests = Test.objects.filter(Q(category_id__in=child_category) | Q(category_id=category_id))
     curr_category = Category.objects.get(pk=category_id)
     context = {
@@ -93,5 +92,5 @@ def result(request):
 @login_required
 def history(request):
     results = TestResult.objects.filter(user_id=request.user.id)
-    context = {"title": "История пройденных тестов", "results": results}
+    context = {"results": results}
     return render(request, template_name="testik/history.html", context=context)

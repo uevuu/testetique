@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.urls import reverse
 from .validators import question_type_validator
 
 User = get_user_model()
@@ -19,10 +18,6 @@ class Category(models.Model):
         verbose_name_plural = "категории"
         ordering = ["title"]
 
-    def get_absolute_url(self):
-        # url in template tags
-        return reverse('category', kwargs={"category_id": self.pk})
-
 
 class Test(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название")
@@ -33,9 +28,6 @@ class Test(models.Model):
     category = models.ForeignKey("Category", on_delete=models.CASCADE, verbose_name="Категория")
     time_border = models.DurationField(blank=True, null=True, verbose_name="Ограничение по времени")
     shuffle = models.BooleanField(default=False, verbose_name="Перемешать вопросы")
-
-    def get_test_url(self):
-        return reverse('test', kwargs={"test_id": self.pk})
 
     def __str__(self):
         return self.title

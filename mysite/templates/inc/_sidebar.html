@@ -3,7 +3,7 @@
     {% get_categories as categories %}
     {% for category in categories %}
     {% if category.parent == None %}
-    <a href="{{category.get_absolute_url}}" class="list-group-item list-group-item-action">{{category.title}}({{category.parent}})</a>
+    <a href="{% url 'category' category_id=category.id %}" class="list-group-item list-group-item-action">{{category.title}}({{category.parent}})</a>
     {% endif %}
     {% endfor %}
 </div>

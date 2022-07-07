@@ -1,7 +1,8 @@
 <style>
     .d-flex {
-        width: 650px;
-        margin: 0 auto;
+        width: 575px;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
 
@@ -21,12 +22,14 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'history' %}">История тестов</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" maxlength="150"
-                       placeholder="Введите название теста, например, Как хорошо ты знаешь игры?"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">🔍</button>
-            </form>
+            <div class="collapse navbar-collapse">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" maxlength="150"
+                           placeholder="Введите название теста, например, Как хорошо ты знаешь игры?"
+                           aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">🔍</button>
+                </form>
+            </div>
             {% if request.user.is_authenticated %}
             <span class="navbar-text">
                 Добро пожаловать, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a>

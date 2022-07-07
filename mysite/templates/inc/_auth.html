@@ -1,8 +1,7 @@
 <style>
     table {
         background: #e0e0e0;
-        width: 663px;
-        /*так и не понял, как без указания сделать размер такой же, как и у message*/
+        width: 100%;
         border-radius: 10px;
     }
 
@@ -15,6 +14,10 @@
         display: inline-block;
     }
 
+    .btn-primary {
+        width: 100%;
+    }
+
 </style>
 
 <form method="POST">
@@ -24,6 +27,5 @@
     <table>
         {{ form.as_table }}
     </table>
-    <button style="width: 663px" type="submit" class="btn btn-primary col-lg-6">{{ button_title }}</button>
-<!--    так и не понял, как без указания сделать размер такой же, как и у message-->
+    <button type="submit" class="btn btn-primary col-lg-6">{{ button_title }}</button>
 </form>
