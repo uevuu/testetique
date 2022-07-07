@@ -9,7 +9,9 @@
     <div class="card-header"><a href="{{item.category.get_absolute_url}}">{{item.category}}</a></div>
     <div class="card-body">
         <h5 class="card-title"><a href="{{item.get_test_url}}">{{item.title}}</a></h5>
-        <p class="card-text">{{item.description}}</p>
+        <p class="card-text">{{item.description}}</p><hr>
+        <p class="fw-lighter">Дата добавления: {{item.created_date|date:"d-m-Y"}}<br>Количество прохождений:
+            {{item.attempts}}<br>Время для прохождения(Дни:Часы:Минуты): {{item.time_border}}</p>
     </div>
 </div>
 {% endfor %}
