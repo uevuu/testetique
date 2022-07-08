@@ -2,12 +2,15 @@
 
 {% block title %}Наши тесты{% endblock %}
 
-<main>
-    {% block sidebar %}
-    {% include 'inc/_sidebar.html' %}
-    {% endblock %}
 
-    {% block content %}
-    {% include 'inc/_content.html' %}
-    {% endblock %}
-</main>
+{% block accordion %}
+{% include 'inc/_accordion.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'inc/_content.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}

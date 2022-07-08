@@ -21,15 +21,20 @@
     {% include 'inc/_nav.html'%}
 </header>
 <main>
+    <br>
     <div class="row">
         <div class="col-md-3">
-            {% block sidebar %}SIDEBAR{% endblock %}
+            {% block accordion %}ACCORDION{% endblock %}
         </div>
         <div class="col-md-6">
             {% include 'inc/_messages.html' %}
             {% block content %}CONTENT{% endblock %}
         </div>
+        <div class="col-md-3">
+            {% block sidebar %}SIDEBAR{% endblock %}
+        </div>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
