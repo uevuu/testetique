@@ -9,7 +9,7 @@
     <div class="card-header"><a href="{% url 'category' category_id=item.category.id %}">{{item.category}}</a></div>
     <div class="card-body">
         <h5 class="card-title"><a href="{% url 'test' test_id=item.id %}">{{item.title}}</a></h5>
-        <p class="card-text">{{item.description}}</p>
+        <p class="card-text">{{item.description|truncatechars:75}}</p>
     </div>
 </div>
 {% endfor %}

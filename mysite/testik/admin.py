@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from nested_admin.nested import NestedModelAdmin, NestedTabularInline
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -8,11 +9,16 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ("parent",)
 
 
-class QuestionInline(admin.TabularInline):
+class AnswerInline(NestedTabularInline):
+    model = Answer
+
+
+class QuestionInline(NestedTabularInline):
     model = Question
+    inlines = [AnswerInline]
 
 
-class TestAdmin(admin.ModelAdmin):
+class TestAdmin(NestedModelAdmin):
     list_display = ("title", "description", "created_date", "update_date",
                     "attempts", "category", "time_border", "shuffle")
     search_fields = ("title", "description")
@@ -21,10 +27,6 @@ class TestAdmin(admin.ModelAdmin):
     inlines = [
         QuestionInline,
     ]
-
-
-class AnswerInline(admin.TabularInline):
-    model = Answer
 
 
 class QuestionAdmin(admin.ModelAdmin):
