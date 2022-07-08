@@ -82,7 +82,10 @@ def description_test(request, test_id):
 def filter_tests(request):
     if request.GET:
         child_list = request.GET.getlist("category")
-        sort_param = request.GET.getlist("sort_param")[0]
+        if len(request.GET.getlist("sort_param")) == 0:
+            sort_param = '-created_date'
+        else:
+            sort_param = request.GET.getlist("sort_param")[0]
         child_category = Category.objects.filter(parent_id__in=child_list)
         category_list = request.GET.getlist("category")
         child_list = [int(_) for _ in child_list]
