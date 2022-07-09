@@ -51,6 +51,7 @@ def tests_page(request):
     all_tests = Test.objects.all().order_by("-created_date")
     context = {
         'all_tests': all_tests,
+        'sort_param': '-created_date'
     }
     return render(request, template_name='testik/tests_page.html', context=context)
 
@@ -58,11 +59,17 @@ def tests_page(request):
 @login_required
 def get_category(request, category_id):
     child_category = Category.objects.filter(parent_id=category_id)
-    all_tests = Test.objects.filter(Q(category_id__in=child_category) | Q(category_id=category_id))
+    if len(request.GET.getlist("sort_param")) == 0:
+        sort_param = "-created_date"
+    else:
+        sort_param = request.GET.getlist("sort_param")[0]
+    print(request.GET.getlist("sort_param"))
+    all_tests = Test.objects.filter(Q(category_id__in=child_category) | Q(category_id=category_id)).order_by(sort_param)
     curr_category = Category.objects.get(pk=category_id)
     context = {
         'all_tests': all_tests,
-        'category': curr_category
+        'category': curr_category,
+        'sort_param': sort_param
     }
     return render(request, template_name='testik/category.html', context=context)
 
@@ -82,10 +89,7 @@ def description_test(request, test_id):
 def filter_tests(request):
     if request.GET:
         child_list = request.GET.getlist("category")
-        if len(request.GET.getlist("sort_param")) == 0:
-            sort_param = '-created_date'
-        else:
-            sort_param = request.GET.getlist("sort_param")[0]
+        sort_param = request.GET.getlist("sort_param")[0]
         child_category = Category.objects.filter(parent_id__in=child_list)
         category_list = request.GET.getlist("category")
         child_list = [int(_) for _ in child_list]
