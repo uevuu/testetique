@@ -63,7 +63,6 @@ def get_category(request, category_id):
         sort_param = "-created_date"
     else:
         sort_param = request.GET.getlist("sort_param")[0]
-    print(request.GET.getlist("sort_param"))
     all_tests = Test.objects.filter(Q(category_id__in=child_category) | Q(category_id=category_id)).order_by(sort_param)
     curr_category = Category.objects.get(pk=category_id)
     context = {
@@ -107,11 +106,21 @@ def filter_tests(request):
     return tests_page(request)
 
 
-# def index(request):
-#     user_search = request.GET.get('search')
-#     tests = Test.objects.filter(Q(description__icontains=user_search) | Q(title__icontains=user_search))
-#     context = {'all_tests': tests}
-#     return render(request, template_name='testik/tests_page.html', context=context)
+@login_required
+def search_test(request):
+    test_name = request.GET.get('test_title').replace('+', ' ')
+    sort_param = request.GET.get("sort_param")
+    if sort_param is None:
+        sort_param = "-created_date"
+    tests = Test.objects.filter(Q(title__contains=test_name) | Q(description__contains=test_name)).order_by(sort_param)
+    context = {
+        'all_tests': tests,
+        'test_url': test_name.replace(' ', '+'),
+        'test_title': test_name,
+        'sort_param': sort_param
+    }
+    return render(request, template_name='testik/search.html', context=context)
+
 
 @login_required
 def sort_tests(request):

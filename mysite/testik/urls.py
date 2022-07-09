@@ -5,6 +5,7 @@ urlpatterns = [
     path('', main_page, name='main'),
     path('tests/', filter_tests, name='tests'),
     path('tests/category/<int:category_id>/', get_category, name='category'),
+    path('tests/search/', search_test, name='search'),
     path('tests/test/<int:test_id>/', description_test, name='test'),
     path('tests/test/<int:test_id>/passing/', passing_test, name='passing'),
     path('tests/test/<int:test_id>/result/', result, name='result'),
