@@ -1,8 +1,9 @@
 <style>
     .d-flex {
         width: 575px;
-        margin-left: auto;
-        margin-right: auto;
+        position: absolute;
+        margin-left: 7%;
+        margin-bottom: 0;
     }
 
 
@@ -40,7 +41,7 @@
             </div>
             {% if request.user.is_authenticated %}
             <span class="navbar-text">
-                Добро пожаловать, {{ user.username|truncatechars:18 }} | <a href="{% url 'logout' %}">Logout</a>
+                Добро пожаловать, {{ user.username|truncatechars:16 }} | <a href="{% url 'logout' %}">Logout</a>
             </span>
             {% else %}
             <span class="navbar-text">

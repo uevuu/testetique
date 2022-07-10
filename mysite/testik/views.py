@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from .forms import UserRegisterForm, UserLoginForm
 from .models import TestResult, Test, Category, Question
+from .services import processing_user_answers
+from math import ceil
+from datetime import datetime
 
 
 def main_page(request):
@@ -15,6 +17,8 @@ def main_page(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Регистрация прошла успешно!")
+            if 'next' in request.GET:
+                return redirect(request.GET['next'])
             return redirect("tests")
         else:
             messages.error(request, "Неудачная попытка регистрации")
@@ -32,6 +36,8 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            if 'next' in request.GET:
+                return redirect(request.GET['next'])
             return redirect('tests')
     else:
         form = UserLoginForm()
@@ -71,17 +77,6 @@ def get_category(request, category_id):
         'sort_param': sort_param
     }
     return render(request, template_name='testik/category.html', context=context)
-
-
-@login_required
-def description_test(request, test_id):
-    curr_test = get_object_or_404(Test, pk=test_id)
-    questions = Question.objects.filter(test_id=test_id)
-    context = {
-        'test': curr_test,
-        'questions': questions
-    }
-    return render(request, template_name='testik/test.html', context=context)
 
 
 @login_required
@@ -130,13 +125,34 @@ def sort_tests(request):
 
 
 @login_required
-def passing_test(request):
-    return HttpResponse('Пользователь делает тест')
+def test_preview(request, test_id):
+    test = Test.objects.get(pk=test_id)
+    context = {'test': test}
+    return render(request, template_name="testik/test_preview.html", context=context)
 
 
 @login_required
-def result(request):
-    return HttpResponse('Твой результат')
+def passing_test(request, test_id):
+    test = Test.objects.get(pk=test_id)
+    questions = Question.objects.filter(test_id=test_id)
+    questions = questions.order_by('?') if test.shuffle else questions
+    context = {'test': test, 'questions': questions}
+    return render(request, template_name="testik/passing.html", context=context)
+
+
+@login_required
+def result(request, test_id):
+    test = Test.objects.get(pk=test_id)
+    context = {}
+    if request.method == "POST":
+        total, maximum, mistakes = processing_user_answers(request, test_id)
+        res = ceil(total / maximum * 100)
+        TestResult.objects.create(user_id=request.user, test_id=test,
+                                  result=res, attempt_time=datetime.now())
+        context = {'test': test, 'total': total, 'maximum': maximum, 'mistakes': mistakes, 'result': res}
+    else:
+        return redirect('/tests')
+    return render(request, template_name="testik/result.html", context=context)
 
 
 @login_required
