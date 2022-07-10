@@ -1,10 +1,42 @@
 {% extends 'base.html' %}
-{% load testik_tags %}
 {% block title %}{{ test.title }}{% endblock %}
 <main>
     {% block accordion %}{% endblock %}
     {% block content %}
-
+    <div class="card text-center">
+        <div class="card-header">
+            <h5>{{ test.title }}</h5>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">Ваш результат:</h6>
+            <br/>
+            <p class="card-text">{{ total }} из {{ maximum }} баллов</p>
+            <div class="progress">
+                <div class="progress-bar" aria-valuenow="{{ total }}" aria-valuemin="0"
+                     role="progressbar" style="width: {{ result }}%"
+                     aria-valuemax="{{ maximum }}">{{ result }}%
+                </div>
+            </div>
+            <br/>
+            {% if mistakes %}
+            <h6 class="card-title">Ваши ошибки:</h6>
+            <ul>
+                {% for mistake in mistakes %}
+                <li>{{ mistake.0 }}
+                    <br>
+                    {% for item in mistake.1 %}
+                    <span class="text-danger" style="font-weight:bold">{{ item }}</span><br/>
+                    {% endfor %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            <a href="{% url 'passing' test.id %}" class="btn btn-primary">Пройти заново</a>
+            <a href="{% url 'tests' %}" class="btn btn-primary">К тестам</a>
+        </div>
+    </div>
     {% endblock %}
     {% block sidebar %}{% endblock %}
 </main>

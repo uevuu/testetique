@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
-{% load testik_tags %}
 {% block title %}{{ test.title }}{% endblock %}
 <main>
     {% block accordion %}{% endblock %}
 
     {% block content %}
-    <form action="{% url 'result' test_id=test.id %}" method="POST">
+    <form action="{% url 'result' test.id %}" method="POST">
         {% csrf_token %}
         <div class="card">
             <div class="card-header text-center">

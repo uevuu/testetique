@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from .forms import UserRegisterForm, UserLoginForm
 from .models import TestResult, Test, Category, Question
+from .services import processing_user_answers
+from math import ceil
+from datetime import datetime
 
 
 def main_page(request):
@@ -71,17 +74,6 @@ def get_category(request, category_id):
 
 
 @login_required
-def description_test(request, test_id):
-    curr_test = get_object_or_404(Test, pk=test_id)
-    questions = Question.objects.filter(test_id=test_id)
-    context = {
-        'test': curr_test,
-        'questions': questions
-    }
-    return render(request, template_name='testik/test.html', context=context)
-
-
-@login_required
 def filter_tests(request):
     if request.GET:
         child_list = request.GET.getlist("category")
@@ -135,8 +127,16 @@ def passing_test(request, test_id):
 
 @login_required
 def result(request, test_id):
-    # print(request.POST)
+    test = Test.objects.get(pk=test_id)
     context = {}
+    if request.method == "POST":
+        total, maximum, mistakes = processing_user_answers(request, test_id)
+        res = ceil(total / maximum * 100)
+        TestResult.objects.create(user_id=request.user, test_id=test,
+                                  result=res, attempt_time=datetime.now())
+        context = {'test': test, 'total': total, 'maximum': maximum, 'mistakes': mistakes, 'result': res}
+    else:
+        return redirect('/tests')
     return render(request, template_name="testik/result.html", context=context)
 
 
