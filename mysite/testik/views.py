@@ -112,7 +112,9 @@ def search_test(request):
     sort_param = request.GET.get("sort_param")
     if sort_param is None:
         sort_param = "-created_date"
-    tests = Test.objects.filter(Q(title__contains=test_name) | Q(description__contains=test_name)).order_by(sort_param)
+    tests = Test.objects.filter(
+        Q(title__contains=test_name.capitalize()) | Q(description__contains=test_name.capitalize()) |
+        Q(title__contains=test_name.lower()) | Q(description__contains=test_name.lower())).order_by(sort_param)
     context = {
         'all_tests': tests,
         'test_url': test_name.replace(' ', '+'),
