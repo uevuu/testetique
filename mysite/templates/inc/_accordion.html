@@ -1,5 +1,4 @@
 {% load testik_tags %}
-<h5 style="text-align: center; position: sticky;">Фильтр</h5>
 <form action="" method="get" id="foo1">
     <div class="accordion" id="accordionPanelsStayOpenExample">
         {% get_categories as categories %}
@@ -43,8 +42,5 @@
             </div>
         </div>
         {% endfor %}
-        <div class="accordion-item">
-            <button style="width: 100%" class="btn btn-primary" type="submit">Применить фильтр(ы)</button>
-        </div>
     </div>
 </form>
