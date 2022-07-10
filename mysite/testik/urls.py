@@ -10,6 +10,7 @@ urlpatterns = [
     path('tests/<int:test_id>/passing/', passing_test, name='passing'),
     path('tests/<int:test_id>/result/', result, name='result'),
     path('history/', history, name='history'),
+    path('register/', user_register, name='register'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout')
 ]

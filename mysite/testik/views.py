@@ -11,6 +11,11 @@ from datetime import datetime
 
 
 def main_page(request):
+    context = {}
+    return render(request, 'testik/main_page.html', context)
+
+
+def user_register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -27,7 +32,7 @@ def main_page(request):
     content = {'form': form,
                'form_title': "Регистрация",
                "button_title": "Зарегистрироваться"}
-    return render(request, template_name='testik/main_page.html', context=content)
+    return render(request, 'testik/auth.html', content)
 
 
 def user_login(request):
@@ -44,7 +49,7 @@ def user_login(request):
     content = {'form': form,
                'form_title': "Авторизация",
                "button_title": "Авторизоваться"}
-    return render(request, template_name='testik/main_page.html', context=content)
+    return render(request, 'testik/auth.html', content)
 
 
 def user_logout(request):
@@ -59,7 +64,7 @@ def tests_page(request):
         'all_tests': all_tests,
         'sort_param': '-created_date'
     }
-    return render(request, template_name='testik/tests_page.html', context=context)
+    return render(request, 'testik/tests_page.html', context)
 
 
 @login_required
@@ -76,7 +81,7 @@ def get_category(request, category_id):
         'category': curr_category,
         'sort_param': sort_param
     }
-    return render(request, template_name='testik/category.html', context=context)
+    return render(request, 'testik/category.html', context)
 
 
 @login_required
@@ -97,7 +102,7 @@ def filter_tests(request):
             'child_list': child_list,
             'sort_param': sort_param,
         }
-        return render(request, template_name='testik/tests_page.html', context=context)
+        return render(request, 'testik/tests_page.html', context)
     return tests_page(request)
 
 
@@ -116,7 +121,7 @@ def search_test(request):
         'test_title': test_name,
         'sort_param': sort_param
     }
-    return render(request, template_name='testik/search.html', context=context)
+    return render(request, 'testik/search.html', context)
 
 
 @login_required
@@ -128,7 +133,7 @@ def sort_tests(request):
 def test_preview(request, test_id):
     test = Test.objects.get(pk=test_id)
     context = {'test': test}
-    return render(request, template_name="testik/test_preview.html", context=context)
+    return render(request, "testik/test_preview.html", context)
 
 
 @login_required
@@ -137,14 +142,13 @@ def passing_test(request, test_id):
     questions = Question.objects.filter(test_id=test_id)
     questions = questions.order_by('?') if test.shuffle else questions
     context = {'test': test, 'questions': questions}
-    return render(request, template_name="testik/passing.html", context=context)
+    return render(request, "testik/passing.html", context)
 
 
 @login_required
 def result(request, test_id):
-    test = Test.objects.get(pk=test_id)
-    context = {}
     if request.method == "POST":
+        test = Test.objects.get(pk=test_id)
         total, maximum, mistakes = processing_user_answers(request, test_id)
         res = ceil(total / maximum * 100)
         TestResult.objects.create(user_id=request.user, test_id=test,
@@ -152,11 +156,11 @@ def result(request, test_id):
         context = {'test': test, 'total': total, 'maximum': maximum, 'mistakes': mistakes, 'result': res}
     else:
         return redirect('/tests')
-    return render(request, template_name="testik/result.html", context=context)
+    return render(request, "testik/result.html", context)
 
 
 @login_required
 def history(request):
     results = TestResult.objects.filter(user_id=request.user.id)
     context = {"results": results}
-    return render(request, template_name="testik/history.html", context=context)
+    return render(request, "testik/history.html", context)

@@ -15,7 +15,9 @@ def processing_user_answers(request, test_id):
     for question in questions:
         if question.question_type == -1:
             maximum += 1
-            user_answer = request.POST[f'{question.pk}']
+            user_answer = request.POST.get(f'{question.pk}')
+            if not user_answer:
+                user_answer = 'нет ответа'
             correct_answer = Answer.objects.get(question_id=question.pk).answer_text
             check = open_field_answer_validator(user_answer, correct_answer)
             if not check:
@@ -23,10 +25,15 @@ def processing_user_answers(request, test_id):
             total += check
         elif question.question_type == 0:
             maximum += 1
-            user_answer = Answer.objects.get(pk=request.POST[f'{question.pk}'])
-            check = user_answer.is_correct
-            if not check:
-                mistakes.append((question.question_text, [user_answer.answer_text]))
+            user_answer_pk = request.POST.get(f'{question.pk}')
+            if user_answer_pk is not None:
+                user_answer = Answer.objects.get(pk=user_answer_pk)
+                check = user_answer.is_correct
+                if not check:
+                    mistakes.append((question.question_text, [user_answer.answer_text]))
+            else:
+                mistakes.append((question.question_text, ['нет ответа']))
+                check = 0
             total += check
         else:
             answers = Answer.objects.filter(question_id=question.pk)
