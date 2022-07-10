@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -15,6 +14,8 @@ def main_page(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Регистрация прошла успешно!")
+            if 'next' in request.GET:
+                return redirect(request.GET['next'])
             return redirect("tests")
         else:
             messages.error(request, "Неудачная попытка регистрации")
@@ -32,6 +33,8 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            if 'next' in request.GET:
+                return redirect(request.GET['next'])
             return redirect('tests')
     else:
         form = UserLoginForm()
@@ -48,7 +51,7 @@ def user_logout(request):
 
 @login_required
 def tests_page(request):
-    all_tests = Test.objects.all()
+    all_tests = Test.objects.all().order_by("-created_date")
     context = {
         'all_tests': all_tests,
     }
@@ -70,7 +73,6 @@ def get_category(request, category_id):
 @login_required
 def description_test(request, test_id):
     curr_test = get_object_or_404(Test, pk=test_id)
-    # curr_test = Test.objects.get(pk=test_id)
     questions = Question.objects.filter(test_id=test_id)
     context = {
         'test': curr_test,
@@ -80,13 +82,62 @@ def description_test(request, test_id):
 
 
 @login_required
-def passing_test(request):
-    return HttpResponse('Пользователь делает тест')
+def filter_tests(request):
+    if request.GET:
+        child_list = request.GET.getlist("category")
+        if len(request.GET.getlist("sort_param")) == 0:
+            sort_param = '-created_date'
+        else:
+            sort_param = request.GET.getlist("sort_param")[0]
+        child_category = Category.objects.filter(parent_id__in=child_list)
+        category_list = request.GET.getlist("category")
+        child_list = [int(_) for _ in child_list]
+        if len(child_list) == 0:
+            tests = Test.objects.all().order_by(sort_param)
+        else:
+            tests = Test.objects.filter(
+                Q(category_id__in=category_list) | Q(category_id__in=child_category)).order_by(sort_param)
+        context = {
+            'all_tests': tests,
+            'child_list': child_list,
+            'sort_param': sort_param,
+        }
+        return render(request, template_name='testik/tests_page.html', context=context)
+    return tests_page(request)
+
+
+# def index(request):
+#     user_search = request.GET.get('search')
+#     tests = Test.objects.filter(Q(description__icontains=user_search) | Q(title__icontains=user_search))
+#     context = {'all_tests': tests}
+#     return render(request, template_name='testik/tests_page.html', context=context)
+
+@login_required
+def sort_tests(request):
+    pass
 
 
 @login_required
-def result(request):
-    return HttpResponse('Твой результат')
+def test_preview(request, test_id):
+    test = Test.objects.get(pk=test_id)
+    context = {'test': test}
+    return render(request, template_name="testik/test_preview.html", context=context)
+
+
+@login_required
+def passing_test(request, test_id):
+    test = Test.objects.get(pk=test_id)
+    questions = Question.objects.filter(test_id=test_id)
+    questions = questions.order_by('?') if test.shuffle else questions
+    context = {'test': test, 'questions': questions}
+    return render(request, template_name="testik/passing.html", context=context)
+
+
+@login_required
+def result(request, test_id):
+    # print(request.POST)
+    context = {}
+    return render(request, template_name="testik/result.html", context=context)
 
 
 @login_required

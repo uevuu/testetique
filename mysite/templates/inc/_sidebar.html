@@ -1,9 +1,103 @@
-{% load testik_tags %}
-<div class="list-group">
-    {% get_categories as categories %}
-    {% for category in categories %}
-    {% if category.parent == None %}
-    <a href="{% url 'category' category_id=category.id %}" class="list-group-item list-group-item-action">{{category.title}}({{category.parent}})</a>
-    {% endif %}
-    {% endfor %}
-</div>
+<h5 style="text-align: center;">Сортировка</h5>
+<form action="" method="get" id="foo1">
+
+    <div class="form-check">
+        {% if sort_param == "-created_date" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param1" value="-created_date"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param1" value="-created_date"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param1">
+            Сортировать по дате добавления (&dArr;)
+        </label>
+    </div>
+
+    <div class="form-check">
+        {% if sort_param == "-attempts" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param2" value="-attempts"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param2" value="-attempts"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param2">
+            Сортировать по популярности (&dArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "-time_border" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param3" value="-time_border"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param3" value="-time_border"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param3">
+            Сортировать по длительности (&dArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "-title" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param7" value="-title"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param7" value="-title"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param7">
+            Сортировать по названию (&dArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "created_date" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param4" value="created_date"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param4" value="created_date"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param4">
+            Сортировать по дате добавления (&uArr;)
+        </label>
+    </div>
+
+    <div class="form-check">
+        {% if sort_param == "attempts" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param5" value="attempts"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param5" value="attempts"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param5">
+            Сортировать по популярности (&uArr;)
+        </label>
+    </div>
+
+    <div class="form-check">
+        {% if sort_param == "time_border" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param6" value="time_border"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param6" value="time_border"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param6">
+            Сортировать по длительности (&uArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "title" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param8" value="title"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param8" value="title"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param8">
+            Сортировать по названию (&dArr;)
+        </label>
+    </div>
+</form>

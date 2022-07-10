@@ -2,14 +2,21 @@
 <div class="card text-bg-secondary mb-3" style="max-width: 70rem;">
     <style>
         a {
-        text-decoration: none;
-        color: inherit;
+            text-decoration: none;
+            color: inherit;
         }
     </style>
     <div class="card-header"><a href="{% url 'category' category_id=item.category.id %}">{{item.category}}</a></div>
     <div class="card-body">
-        <h5 class="card-title"><a href="{% url 'test' test_id=item.id %}">{{item.title}}</a></h5>
+        <h5 class="card-title"><a href="{% url 'preview' test_id=item.id %}">{{item.title}}</a></h5>
         <p class="card-text">{{item.description|truncatechars:75}}</p>
+        <hr>
+        {% if item.time_border != None %}
+            <p class="fw-lighter">Время на прохождение: {{item.time_border}}<br>Пройдено раз:
+                {{item.attempts}}<br>Дата создания: {{item.created_date|date:"d-m-Y"}}</p>
+        {% else %}
+            <p class="fw-lighter">Пройдено раз: {{item.attempts}}<br>Дата создания: {{item.created_date|date:"d-m-Y"}}</p>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

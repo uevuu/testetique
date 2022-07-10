@@ -3,11 +3,19 @@
 {% block title %}{{category}}{% endblock %}
 
 <main>
-    {% block sidebar %}
-    {% include 'inc/_sidebar.html' %}
+    {% block accordion %}
+    {% load testik_tags %}
+    <div align="center">
+        <p class="fw-semibold">Категория: {{category}}</p>
+        <button class="btn btn-primary" onclick="history.back()">Вернуться назад</button>
+    </div>
     {% endblock %}
 
     {% block content %}
     {% include 'inc/_content.html' %}
+    {% endblock %}
+
+    {% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
     {% endblock %}
 </main>
