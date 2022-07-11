@@ -149,6 +149,8 @@ def passing_test(request, test_id):
 def result(request, test_id):
     if request.method == "POST":
         test = Test.objects.get(pk=test_id)
+        test.attempts += 1
+        test.save()
         total, maximum, mistakes = processing_user_answers(request, test_id)
         res = ceil(total / maximum * 100)
         TestResult.objects.create(user_id=request.user, test_id=test,
