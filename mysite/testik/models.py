@@ -26,7 +26,7 @@ class Test(models.Model):
     update_date = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     attempts = models.PositiveIntegerField(default=0, verbose_name="Пройдено")
     category = models.ForeignKey("Category", on_delete=models.CASCADE, verbose_name="Категория")
-    time_border = models.DurationField(blank=True, null=True, verbose_name="Ограничение по времени")
+    time_border = models.PositiveIntegerField(blank=True, null=True, verbose_name="Ограничение по времени")
     shuffle = models.BooleanField(default=False, verbose_name="Перемешать вопросы")
 
     def __str__(self):

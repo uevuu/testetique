@@ -141,7 +141,12 @@ def passing_test(request, test_id):
     test = Test.objects.get(pk=test_id)
     questions = Question.objects.filter(test_id=test_id)
     questions = questions.order_by('?') if test.shuffle else questions
-    context = {'test': test, 'questions': questions}
+    tests_links = {}
+    for i in range(questions.count()):
+        tests_links[i + 1] = i
+    print(tests_links)
+    tests_count = [i + 1 for i in range(questions.count())]
+    context = {'test': test, 'questions': questions, 'tests_count': tests_count, 'test_links': tests_links}
     return render(request, "testik/passing.html", context)
 
 

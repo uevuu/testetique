@@ -12,7 +12,7 @@
         <p class="card-text">{{item.description|truncatechars:75}}</p>
         <hr>
         {% if item.time_border != None %}
-            <p class="fw-lighter">Время на прохождение: {{item.time_border}}<br>Пройдено раз:
+            <p class="fw-lighter">Время на прохождение: {{item.time_border}} минут<br>Пройдено раз:
                 {{item.attempts}}<br>Дата создания: {{item.created_date|date:"d-m-Y"}}</p>
         {% else %}
             <p class="fw-lighter">Пройдено раз: {{item.attempts}}<br>Дата создания: {{item.created_date|date:"d-m-Y"}}</p>
