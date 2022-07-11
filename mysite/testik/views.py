@@ -152,7 +152,7 @@ def result(request, test_id):
         test.attempts += 1
         test.save()
         total, maximum, mistakes = processing_user_answers(request, test_id)
-        res = ceil(total / maximum * 100)
+        res = ceil(total / maximum * 100) if maximum != 0 else 100
         TestResult.objects.create(user_id=request.user, test_id=test,
                                   result=res, attempt_time=datetime.now())
         context = {'test': test, 'total': total, 'maximum': maximum, 'mistakes': mistakes, 'result': res}
