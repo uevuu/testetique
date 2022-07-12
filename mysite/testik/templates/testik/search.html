@@ -12,6 +12,11 @@
 
     {% block content %}
     {% include 'inc/_content.html' %}
+    {% if test_title|lower == 'siu'%}
+    <img src="https://i.gifer.com/Iyo.gif" alt="я джифка">
+    <img src="https://c.tenor.com/ZgsyS1epGSYAAAAd/siuuu-ronaldo.gif" alt="я джифка">
+    <img src="https://i.pinimg.com/originals/7a/85/a2/7a85a2fbffc6d93167b954c78873b505.gif" alt="я джифка">
+    {% endif%}
     {% endblock %}
 
     {% block sidebar %}
