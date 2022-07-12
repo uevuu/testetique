@@ -2,98 +2,100 @@
 {% load static %}
 {% load testik_tags %}
 {% block css_additional %}
-<link rel="stylesheet" href="{% static 'testik/css/passing.css' %}">
+    <link rel="stylesheet" href="{% static 'testik/css/passing.css' %}">
 {% endblock %}
 {% block title %}{{ test.title }}{% endblock %}
 <main>
     {% block accordion %}
-    <div id="list-example" class="list-group" style="position: fixed">
-        {% for pos in tests_count %}
-        <a class="list-group-item list-group-item-action" href="#{{pos}}">{{pos}} вопрос</a>
-        {% endfor %}
-    </div>
+        <div id="list-example" style="position: fixed; left: 1%;" class="list-group">
+            {% for question in questions %}
+                <a class="list-group-item list-group-item-action" href="#{{ forloop.counter }}">{{ forloop.counter }} вопрос</a>
+            {% endfor %}
+        </div>
     {% endblock %}
 
     {% block content %}
-    <form action="{% url 'result' test.id %}" method="POST">
-        {% csrf_token %}
-        <div class="card">
-            <div class="card-header text-center">
-                <h5 id="1">{{ test }}</h5>
-            </div>
-            <div class="card-body">
-                {% for question in questions %}
-                {% if forloop.counter != 1 %}
-                <hr>
-                {% endif %}
-                {% get_num_plus forloop.counter as num %}
-                <h6 class="card-title" id="{{num}}">{{ forloop.counter }}. {{ question.question_text }}</h6>
-                {% if question.question_type == -1 %}
-                {% for answer in question.answer_set.all %}
-                <input type="text" name="{{ question.id }}" id="{{ answer.answer_text }}">
-                {% endfor %}
-                {% elif question.question_type == 0 %}
-                <fieldset>
-                    {% for answer in question.answer_set.all %}
-                    <input type="radio" name="{{ question.id }}" id="onechoice{{ forloop.counter }}"
-                           value="{{ answer.id }}">
-                    <label for="onechoice{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+        <form action="{% url 'result' test.id %}" method="POST">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5 id="1">{{ test }}</h5>
+                </div>
+                <div class="card-body">
+                    {% for question in questions %}
+                        {% if forloop.counter != 1 %}
+                            <hr>
+                        {% endif %}
+                        {% get_num_plus forloop.counter as num %}
+                        <h6 class="card-title" id="{{ num }}">{{ forloop.counter }}. {{ question.question_text }}</h6>
+                        {% if question.question_type == -1 %}
+                            {% for answer in question.answer_set.all %}
+                                <input type="text" name="{{ question.id }}" id="{{ answer.answer_text }}">
+                            {% endfor %}
+                        {% elif question.question_type == 0 %}
+                            <fieldset>
+                                {% for answer in question.answer_set.all %}
+                                    <input type="radio" name="{{ question.id }}" id="onechoice{{ forloop.counter }}"
+                                           value="{{ answer.id }}">
+                                    <label for="onechoice{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                {% endfor %}
+                            </fieldset>
+                        {% else %}
+                            <fieldset>
+                                {% for answer in question.answer_set.all %}
+                                    <input type="checkbox" name="{{ question.id }}" id="choice{{ forloop.counter }}"
+                                           value="{{ answer.id }}">
+                                    <label for="choice{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                {% endfor %}
+                            </fieldset>
+                        {% endif %}
                     {% endfor %}
-                </fieldset>
-                {% else %}
-                <fieldset>
-                    {% for answer in question.answer_set.all %}
-                    <input type="checkbox" name="{{ question.id }}" id="choice{{ forloop.counter }}"
-                           value="{{ answer.id }}">
-                    <label for="choice{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
-                    {% endfor %}
-                </fieldset>
-                {% endif %}
-                {% endfor %}
-            </div>
-            <div class="card-footer">
-                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                    Завершить
-                </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Вы уверены, что хотите завершить
-                                    тест?</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Закрыть"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p style="font-weight: bold;" class="p-3 mb-2 bg-danger text-white">Проверьте, что
-                                    вы ответили на все вопросы</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Назад</button>
-                                <input type="submit" class="btn btn-secondary" value="Завершить" id="submit">
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                        Завершить
+                    </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Вы уверены, что хотите завершить
+                                        тест?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p style="font-weight: bold;" class="p-3 mb-2 bg-danger text-white">Проверьте, что
+                                        вы ответили на все вопросы</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Назад</button>
+                                    <input type="submit" class="btn btn-secondary" value="Завершить" id="submit">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
     {% endblock %}
     {% block sidebar %}
-    <div class="timer" style="position: fixed" >
-        <h2 align="center">Таймер</h2>
-        <input type="hidden" id="_minutes" value="{{test.time_border}}">
-        <div class="timer__items">
-            <div class="timer__item timer__hours">00</div>
-            <div class="timer__item timer__minutes">00</div>
-            <div class="timer__item timer__seconds">00</div>
-        </div>
-    </div>
+        {% if test.time_border is not None %}
+            <div class="timer" style="position: fixed">
+                <h2 align="center">Таймер</h2>
+                <input type="hidden" id="_minutes" value="{{ test.time_border }}">
+                <div class="timer__items">
+                    <div class="timer__item timer__hours">00</div>
+                    <div class="timer__item timer__minutes">00</div>
+                    <div class="timer__item timer__seconds">00</div>
+                </div>
+            </div>
+        {% endif %}
     {% endblock %}
 </main>
 {% block js_additional %}
-<script src="{% static 'testik/js/passing.js' %}"></script>
+    <script src="{% static 'testik/js/passing.js' %}"></script>
 {% endblock %}
