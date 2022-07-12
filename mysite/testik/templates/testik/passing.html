@@ -7,9 +7,19 @@
 {% block title %}{{ test.title }}{% endblock %}
 <main>
     {% block accordion %}
-        <div id="list-example" style="position: fixed; left: 1%;" class="list-group">
+        <div id="list-example" style="
+                margin-top:130px;
+                margin-bottom:100px;
+                position:fixed;
+                width: 200px;
+                {% if questions.count >= 10 %}
+                    overflow-y: scroll;
+                {% endif %}
+                top: 0;
+                bottom: 0; left: 1%;" class="list-group">
             {% for question in questions %}
-                <a class="list-group-item list-group-item-action" href="#{{ forloop.counter }}">{{ forloop.counter }} вопрос</a>
+                <a class="list-group-item list-group-item-action" href="#{{ forloop.counter }}">{{ forloop.counter }}
+                    вопрос</a>
             {% endfor %}
         </div>
     {% endblock %}
@@ -84,7 +94,7 @@
     {% endblock %}
     {% block sidebar %}
         {% if test.time_border is not None %}
-            <div class="timer" style="position: fixed">
+            <div class="timer" style="position: fixed;">
                 <h2 align="center">Таймер</h2>
                 <input type="hidden" id="_minutes" value="{{ test.time_border }}">
                 <div class="timer__items">
