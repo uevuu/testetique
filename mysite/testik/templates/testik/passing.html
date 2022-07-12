@@ -8,7 +8,7 @@
 <main>
     {% block accordion %}
     <div id="list-example" style="
-    margin-top:100px;
+    margin-top:130px;
     margin-bottom:100px;
     position:fixed;
     width: 200px;
@@ -91,7 +91,7 @@
     {% endblock %}
     {% block sidebar %}
     {% if test.time_border is not None %}
-    <div class="timer" style="position: fixed">
+    <div class="timer" style="position: fixed; margin-top:220px; margin-left:50px;">
         <h2 align="center">Таймер</h2>
         <input type="hidden" id="_minutes" value="{{ test.time_border }}">
         <div class="timer__items">
