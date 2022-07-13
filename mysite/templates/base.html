@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'testik/css/up_btn.css' %}">
+    {% block css_additional %}{% endblock %}
+    <title>{% block title %}TITLE{% endblock %}</title>
+</head>
+
+<body>
+<style>
+    header {
+        margin-bottom: 70px;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+</style>
+<header>
+    {% include 'inc/_nav.html' %}
+</header>
+<main>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            {% block accordion %}ACCORDION{% endblock %}
+        </div>
+        <div class="col-md-6">
+            {% include 'inc/_messages.html' %}
+            {% block content %}CONTENT{% endblock %}
+        </div>
+        <div class="col-md-3">
+            {% block sidebar %}SIDEBAR{% endblock %}
+            <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+        </div>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'testik/js/up_btn.js' %}"></script>
+{% block js_additional %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{category}}{% endblock %}
+
+<main>
+    {% block accordion %}
+    {% load testik_tags %}
+    <div align="center">
+        <p class="fw-semibold">Категория: {{category}}</p>
+        <a class="btn btn-primary" href="/tests">Вернуться ко всем тестам</a>
+    </div>
+    {% endblock %}
+
+    {% block content %}
+    {% include 'inc/_content.html' %}
+    {% endblock %}
+
+    {% block sidebar %}
+    <h5 style="text-align: center;">Сортировка</h5>
+    <form action="" method="get" id="foo1">
+        {% include 'inc/_sidebar.html' %}
+        <div class="accordion-item">
+            <button style="width: 100%" class="btn btn-primary" type="submit">Сортировать</button>
+        </div>
+    </form>
+    {% endblock %}
+</main>

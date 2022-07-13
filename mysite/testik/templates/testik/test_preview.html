@@ -1,0 +1,44 @@
+<style>
+    #preview-footer {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row;
+    }
+
+    .prev {
+        margin-left: 2%;
+    }
+
+</style>
+{% extends 'base.html' %}
+{% block title %}{{ test.title }}{% endblock %}
+<main>
+    {% block accordion %}{% endblock %}
+    {% block content %}
+    <div class="card text">
+        <div class="card-header text-center">
+            <h5>{{ test.title }}</h5>
+        </div>
+        <div class="card-body">
+            <h6>Описание:</h6>
+            <p class="card-text">{{ test.description }}</p>
+            {% if test.time_border != None %}
+            <h6>Время на прохождение:</h6>
+            <p>{{test.time_border}} минут</p>
+            {% endif %}
+            {% if test.update_date != test.created_date %}
+            <h6>Дата обновления:</h6>
+            <p>{{ test.update_date|date:"d-m-Y H:i" }}</p>
+            {% else %}
+            <h6>Дата создания:</h6>
+            <p>{{ test.created_date|date:"d-m-Y H:i" }}</p>
+            {% endif %}
+        </div>
+        <div id="preview-footer" class="card-footer text-muted">
+            <button class="btn btn-secondary prev" onclick="history.back()">Назад</button>
+            <a href="{% url 'passing' test_id=test.id %}" class="btn btn-primary prev">Пройти тест</a>
+        </div>
+    </div>
+    {% endblock %}
+    {% block sidebar %}{% endblock %}
+</main>

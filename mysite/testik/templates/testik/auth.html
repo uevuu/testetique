@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block accordion %}{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <meta http-equiv="refresh" content="0;URL=/tests/"/>
+    {% endif %}
+    {% include 'inc/_auth.html' %}
+
+{% endblock %}

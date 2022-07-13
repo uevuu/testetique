@@ -1,0 +1,101 @@
+
+
+    <div class="form-check">
+        {% if sort_param == "-created_date" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param1" value="-created_date"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param1" value="-created_date"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param1">
+            По дате добавления (&dArr;)
+        </label>
+    </div>
+
+    <div class="form-check">
+        {% if sort_param == "-attempts" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param2" value="-attempts"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param2" value="-attempts"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param2">
+            По популярности (&dArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "-time_border" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param3" value="-time_border"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param3" value="-time_border"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param3">
+            По длительности (&dArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "-title" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param7" value="-title"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param7" value="-title"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param7">
+            По названию (&dArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "created_date" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param4" value="created_date"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param4" value="created_date"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param4">
+            По дате добавления (&uArr;)
+        </label>
+    </div>
+
+    <div class="form-check">
+        {% if sort_param == "attempts" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param5" value="attempts"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param5" value="attempts"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param5">
+            По популярности (&uArr;)
+        </label>
+    </div>
+
+    <div class="form-check">
+        {% if sort_param == "time_border" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param6" value="time_border"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param6" value="time_border"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param6">
+            По длительности (&uArr;)
+        </label>
+    </div>
+    <div class="form-check">
+        {% if sort_param == "title" %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param8" value="title"
+               form="foo1" checked>
+        {% else %}
+        <input class="form-check-input" type="radio" name="sort_param" id="sort_param8" value="title"
+               form="foo1">
+        {% endif %}
+        <label class="form-check-label" for="sort_param8">
+            По названию (&uArr;)
+        </label>
+    </div>
